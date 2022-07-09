@@ -6,6 +6,80 @@ import 'package:shoes_app/widgets/custom_widgets.dart';
 class ZapatoScreen extends StatelessWidget {
   const ZapatoScreen({Key? key}) : super(key: key);
 
+  void enviarDescripcionSlide(BuildContext context) {
+    Navigator.push(context, fadeTransitionRoute(context));
+  }
+
+  Route slideTransitionRoute(BuildContext context) {
+    return PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) =>
+            const ZapatoDescScreen(),
+        transitionDuration: const Duration(milliseconds: 300),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curveAnimation =
+              CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+
+          return SlideTransition(
+            position:
+                Tween<Offset>(begin: const Offset(0.0, 0.8), end: Offset.zero)
+                    .animate(curveAnimation),
+            child: child,
+          );
+        });
+  }
+
+  Route scaleTransitionRoute(BuildContext context) {
+    return PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) =>
+            const ZapatoDescScreen(),
+        transitionDuration: const Duration(milliseconds: 300),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curveAnimation =
+              CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+
+          return ScaleTransition(
+              scale:
+                  Tween<double>(begin: 0.5, end: 1.0).animate(curveAnimation),
+              child: child);
+        });
+  }
+
+  Route rotationTransitionRoute(BuildContext context) {
+    return PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) =>
+            const ZapatoDescScreen(),
+        transitionDuration: const Duration(milliseconds: 300),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curveAnimation =
+              CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+
+          return RotationTransition(
+              turns:
+                  Tween<double>(begin: 0.8, end: 1.0).animate(curveAnimation),
+              child: child);
+        });
+  }
+
+  Route fadeTransitionRoute(BuildContext context) {
+    return PageRouteBuilder(
+        pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) =>
+            const ZapatoDescScreen(),
+        transitionDuration: const Duration(milliseconds: 500),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curveAnimation =
+              CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+
+          return FadeTransition(
+              opacity:
+                  Tween<double>(begin: 0.2, end: 1.0).animate(curveAnimation),
+              child: child);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Hero(
@@ -23,11 +97,12 @@ class ZapatoScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         cambiarStatusLight();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const ZapatoDescScreen()));
+                        enviarDescripcionSlide(context);
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (BuildContext context) =>
+                        //             const ZapatoDescScreen()));
                       },
                       child: const ZapatoPreview(),
                     ),
